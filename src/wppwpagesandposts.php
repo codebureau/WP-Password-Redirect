@@ -1,15 +1,16 @@
 <?php
 /*
-Plugin Name: Smart Passworded Pages
-Plugin URI: http://thecodecave.com/plugins/smart-passworded-pages-plugin/
-Description: Allows a central login page for password protected child pages. Enter a password and you are taken to the newest child page with a matching password.
-Version: 2.0.0
-Author: Brian Layman
-Author URI: http://eHermitsInc.com/
+Plugin Name: WP Passworded Pages and Posts
+Plugin URI: https://github.com/codebureau/WP-Passworded-Pages-and-Posts
+Description: Allows a central login page for password protected child pages and WP Download . Enter a password and you are taken to the newest child page with a matching password.
+Version: 1.0.0
+Author: Matt Simner
+Author URI: https://codebureau.com
 License: GPL2
 Requires: 2.5
 
-Copyright 2015  Brian Layman  (email : plugins@thecodecave.com)
+Copyright 2024  Matt Simner  (email : plugins@codebureau.com).  
+Ported from Smart Passworded Pages by Brian Layman - 2015.
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License, version 2, as 
@@ -31,29 +32,34 @@ Copyright 2015  Brian Layman  (email : plugins@thecodecave.com)
 define( 'SECONDS_TO_STORE_PW', 864000); // 864000 = 10 Days 
 
 /**
- * Smart Passworded Pages Class
- * @copyright Copyright (c), Brian Layman
- * @author Brian Layman <plugins@TheCodeCave.com>
+ * WP Passworded Pages and Posts Class
+ * @copyright Copyright (c), Matt Simner
+ * @author Matt Simner <plugins@codebureau.com>
  */
- class smartPWPages {
+ class wpPWPagesPosts {
 	/**
-	 * Smart Passworded Pages
+	 * WP Passworded Pages and Posts
 	 * Embeds a form for password submission into a post via a shortcode.
 	 */
-     function smartpwpages_shortcode( $atts ) {
+     function wppwpagesposts_shortcode( $atts ) {
 		global $post;
 
 		extract( shortcode_atts( array(
-			'label' => __( 'Enter', 'smartpwpages' ),
-			'ID' => 'smartPWLogin',
+			'label' => __( 'Enter', 'wppwpagesposts' ),
+			'ID' => 'wpPWLogin',
+			'type' => 'page',
+			'posttype' => '', 
+			'errormsg' => 'You\'ve entered an invalid password',
 			'parent' => $post->ID,
 		), $atts ) );
 
 		$result =  '<form ID="' . esc_attr( $ID ) . '" method="post" action="' . esc_url( get_permalink() ) . '" >' . PHP_EOL;
-		if ( isset( $_GET['wrongpw'] ) ) $result .= '<p id="smartPWError">' . __( 'You\'ve entered an invalid password.</p>', 'smartpwpages' ) . PHP_EOL;
+		if ( isset( $_GET['wrongpw'] ) ) $result .= '<p id="wpPWError">' . __( $errormsg . '</p>', 'wppwpagesposts' ) . PHP_EOL;
 		$result .= '	<input class="requiredField" type="password" name="smartPassword" id="smartPassword" value=""/>' . PHP_EOL;
+		$result .= '	<input type="hidden" name="smartType" value="' .  $type . '" />' . PHP_EOL;
+		$result .= '	<input type="hidden" name="smartPostType" value="' .  $posttype . '" />' . PHP_EOL;
 		$result .= '	<input type="hidden" name="smartParent" value="' .  (int) $parent . '" />' . PHP_EOL;
-		$result .= '	<input type="hidden" name="smartPWPage_nonce" value="' . wp_create_nonce( 'smartPWPage' ).'" />' . PHP_EOL;
+		$result .= '	<input type="hidden" name="wpPWPage_nonce" value="' . wp_create_nonce( 'wpPWPage' ).'" />' . PHP_EOL;
 		$result .= '	<input type="submit" value="' . esc_attr( $label ). '" />' . PHP_EOL;
 		$result .= '</form>' . PHP_EOL;
 		return $result;
@@ -102,7 +108,7 @@ define( 'SECONDS_TO_STORE_PW', 864000); // 864000 = 10 Days
 	 */
 	function process_form() {
 		global $wp_version, $wp_hasher;
-		if ( isset( $_POST[ 'smartPassword' ] ) && isset( $_POST[ 'smartParent' ] ) && wp_verify_nonce( $_POST[ 'smartPWPage_nonce' ], 'smartPWPage' ) ) {
+		if ( isset( $_POST[ 'smartPassword' ] ) && isset( $_POST[ 'smartParent' ] ) && wp_verify_nonce( $_POST[ 'wpPWPage_nonce' ], 'wpPWPage' ) ) {
 			$parentForm  = (int) $_POST[ 'smartParent' ] ;
 			$password = $_POST[ 'smartPassword' ];
 
@@ -112,20 +118,37 @@ define( 'SECONDS_TO_STORE_PW', 864000); // 864000 = 10 Days
 				$postPassword = stripslashes( $password );
 			}
 
-			$args = array(		
-				'sort_order' => 'DESC',
-				'sort_column' => 'post_date',
-				'hierarchical' => 1,
-				'child_of' => $parentForm,
-				'parent' => $parentForm,
-				'post_type' => 'page',
-				'post_status' => 'publish'
-			);
-			
+			//if (isset( $_POST[ 'smartType' ]) && isset( $_POST[ 'smartPostType' ])) {
+				$type = $_POST[ 'smartType' ];
+				$posttype = $_POST[ 'smartPostType' ];
+			//}
+
 			if ( function_exists( 'pause_exclude_pages' ) ) pause_exclude_pages();
 
-			$myPages = get_pages( $args );
+			if ( $type == 'page') {
+				$args = array(		
+					'sort_order' => 'DESC',
+					'sort_column' => 'post_date',
+					'hierarchical' => 1,
+					'child_of' => $parentForm,
+					'parent' => $parentForm,
+					'post_type' => 'page',
+					'post_status' => 'publish'
+				);
+				
+				$myPages = get_pages( $args );
+			}
+			elseif ( $type == 'post') {
+				$args = array(		
+					'sort_order' => 'DESC',
+					'sort_column' => 'post_date',
+					'post_type' => $posttype,
+					'post_status' => 'publish'
+				);
+				
+				$myPages = get_posts( $args );
 
+			}
 			if ( function_exists( 'resume_exclude_pages' ) ) resume_exclude_pages();
 
 			// Version 3.4 and higher has better security on the pw pages
@@ -155,6 +178,6 @@ define( 'SECONDS_TO_STORE_PW', 864000); // 864000 = 10 Days
 /**
  * Intialize Plugin
  */
-$smartPWPages = new smartPWPages();
-add_action( 'init', array( $smartPWPages, 'process_form' ) );
-add_shortcode( 'smartpwpages', array( $smartPWPages, 'smartpwpages_shortcode' ) );
+$wppwpagesposts = new wpPWPagesPosts();
+add_action( 'init', array( $wppwpagesposts, 'process_form' ) );
+add_shortcode( 'wppwpagesposts', array( $wppwpagesposts, 'wppwpagesposts_shortcode' ) );

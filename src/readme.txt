@@ -39,7 +39,7 @@ This is a screen shot of the first demo page for the plugin:
 
 There is also the second demo page for the plugin:
 
-<a href=\"http://thecodecave.com/smart-passworded-pages-demonstration-1/\" title=\"The second demo page for the plugin\">http://thecodecave.com/smart-passworded-pages-demonstration-2/</a> 
+<a href=\"http://thecodecave.com/smart-passworded-pages-demonstration-1/\" title=\"The second demo page for the plugin\">http://thecodecave.com/smart-passworded-pages-demonstration-2/</a>ï¿½
 
 2. The plugin is activated through the simple use of a shortcode in a post.
 
@@ -97,7 +97,7 @@ p#smartPWError {
 }
 
 
-\#smartPWLogin input[type=\"submit\"] {
+\#wpPWLogin input[type=\"submit\"] {
     background-color: coral;
     color: navy;
     font-size: large;
