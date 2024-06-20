@@ -33,12 +33,12 @@ jobs:
             - uses: actions/upload-artifact@v4
               with:
                 name: plugin-package
-                path: ${{ steps.package-id.outputs.artifactFilename }}
+                path: ${{ steps.package-id.outputs.zipFilename }}
 
             - name: Release
               uses: softprops/action-gh-release@v2
               if: startsWith(github.ref, 'refs/tags/')
               with:
                 generate_release_notes: true
-                files: ${{ steps.package-id.outputs.zipFilename }}
+                files: ${{ steps.package-id.outputs.artifactFilename }}
 
