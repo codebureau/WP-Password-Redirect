@@ -11,7 +11,7 @@ jobs:
         name: Package Plugin Zip
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
 
             - uses: vimtor/action-zip@v1.2
               with:
@@ -21,4 +21,4 @@ jobs:
             - uses: actions/upload-artifact@v4
               with:
                 name: plugin-package
-                path: ${{ github.workspace }}/result.zip
+                path: ${{ github.workspace }}/wp-password-redirect.zip
