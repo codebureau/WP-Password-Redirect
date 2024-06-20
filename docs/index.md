@@ -1,5 +1,3 @@
-# WP PW Pages and Posts
-
 This plugin is forked from the excellent and simple [Smart Passworded Pages](https://wordpress.org/plugins/smart-passworded-pages/) by Brian Layman.  All original options of that plugin are still available, with the key difference of the shortcode name.  Find out more in [Usage](usage).
 
 ## Purpose
