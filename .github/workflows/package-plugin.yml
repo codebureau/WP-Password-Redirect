@@ -29,9 +29,9 @@ jobs:
                 path: ${{ github.workspace }}/${{ steps.package-id.outputs.filename}}
 
             - name: Release
-            uses: softprops/action-gh-release@v2
-            if: startsWith(github.ref, 'refs/tags/')
-            with:
+              uses: softprops/action-gh-release@v2
+              if: startsWith(github.ref, 'refs/tags/')
+              with:
                 generate_release_notes: true
                 files: ${{ steps.package-id.outputs.fullFilename}}
 
