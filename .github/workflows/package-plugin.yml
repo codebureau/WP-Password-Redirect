@@ -1,0 +1,24 @@
+name: Package Wordpress Plugin
+
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - main
+
+jobs:
+    package:
+        name: Package Plugin Zip
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+
+            - uses: vimtor/action-zip@v1.2
+              with:
+                files: src/ 
+                dest: wp-password-redirect.zip
+
+            - uses: actions/upload-artifact@v1.1
+              with:
+                name: plugin-package
+                path: ${{ github.workspace }}/result.zip
