@@ -1,5 +1,5 @@
-# WP-Passworded-Pages-and-Posts
-Wordpress Passworded Pages and Posts
+# WP Password Redirect
+Wordpress Password Redirect
 
 Forked from https://thecodecave.com/plugins/smart-passworded-pages/ due to inactivity, and my need to expand the options for target pages.
 
