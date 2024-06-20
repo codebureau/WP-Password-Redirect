@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: WP Passworded Pages and Posts
+Plugin Name: WP Password Redirect
 Plugin URI: https://github.com/codebureau/WP-Passworded-Pages-and-Posts
 Description: Allows a central login page for password protected child pages and WP Download . Enter a password and you are taken to the newest child page with a matching password.
 Version: 1.0.0
@@ -32,20 +32,20 @@ Ported from Smart Passworded Pages by Brian Layman - 2015.
 define( 'SECONDS_TO_STORE_PW', 864000); // 864000 = 10 Days 
 
 /**
- * WP Passworded Pages and Posts Class
+ * WP Password Redirect Class
  * @copyright Copyright (c), Matt Simner
  * @author Matt Simner <plugins@codebureau.com>
  */
- class wpPWPagesPosts {
+ class wpPWRedirect {
 	/**
-	 * WP Passworded Pages and Posts
+	 * WP Password Redirect
 	 * Embeds a form for password submission into a post via a shortcode.
 	 */
-     function wppwpagesposts_shortcode( $atts ) {
+     function wppwredirect_shortcode( $atts ) {
 		global $post;
 
 		extract( shortcode_atts( array(
-			'label' => __( 'Enter', 'wppwpagesposts' ),
+			'label' => __( 'Enter', 'wppwredirect' ),
 			'ID' => 'wpPWLogin',
 			'type' => 'page',
 			'posttype' => '', 
@@ -54,11 +54,11 @@ define( 'SECONDS_TO_STORE_PW', 864000); // 864000 = 10 Days
 		), $atts ) );
 
 		$result =  '<form ID="' . esc_attr( $ID ) . '" method="post" action="' . esc_url( get_permalink() ) . '" >' . PHP_EOL;
-		if ( isset( $_GET['wrongpw'] ) ) $result .= '<p id="wpPWError">' . __( $errormsg . '</p>', 'wppwpagesposts' ) . PHP_EOL;
-		$result .= '	<input class="requiredField" type="password" name="smartPassword" id="smartPassword" value=""/>' . PHP_EOL;
-		$result .= '	<input type="hidden" name="smartType" value="' .  $type . '" />' . PHP_EOL;
-		$result .= '	<input type="hidden" name="smartPostType" value="' .  $posttype . '" />' . PHP_EOL;
-		$result .= '	<input type="hidden" name="smartParent" value="' .  (int) $parent . '" />' . PHP_EOL;
+		if ( isset( $_GET['wrongpw'] ) ) $result .= '<p id="wpPWError">' . __( $errormsg . '</p>', 'wppwredirect' ) . PHP_EOL;
+		$result .= '	<input class="requiredField" type="password" name="wppwPassword" id="wppwPassword" value=""/>' . PHP_EOL;
+		$result .= '	<input type="hidden" name="wppwType" value="' .  $type . '" />' . PHP_EOL;
+		$result .= '	<input type="hidden" name="wppwPostType" value="' .  $posttype . '" />' . PHP_EOL;
+		$result .= '	<input type="hidden" name="wppwParent" value="' .  (int) $parent . '" />' . PHP_EOL;
 		$result .= '	<input type="hidden" name="wpPWPage_nonce" value="' . wp_create_nonce( 'wpPWPage' ).'" />' . PHP_EOL;
 		$result .= '	<input type="submit" value="' . esc_attr( $label ). '" />' . PHP_EOL;
 		$result .= '</form>' . PHP_EOL;
@@ -108,9 +108,9 @@ define( 'SECONDS_TO_STORE_PW', 864000); // 864000 = 10 Days
 	 */
 	function process_form() {
 		global $wp_version, $wp_hasher;
-		if ( isset( $_POST[ 'smartPassword' ] ) && isset( $_POST[ 'smartParent' ] ) && wp_verify_nonce( $_POST[ 'wpPWPage_nonce' ], 'wpPWPage' ) ) {
-			$parentForm  = (int) $_POST[ 'smartParent' ] ;
-			$password = $_POST[ 'smartPassword' ];
+		if ( isset( $_POST[ 'wppwPassword' ] ) && isset( $_POST[ 'wppwParent' ] ) && wp_verify_nonce( $_POST[ 'wpPWPage_nonce' ], 'wpPWPage' ) ) {
+			$parentForm  = (int) $_POST[ 'wppwParent' ] ;
+			$password = $_POST[ 'wppwPassword' ];
 
 			if ( function_exists( 'wp_unslash' ) ) {
 				$postPassword = wp_unslash( $password );
@@ -118,9 +118,9 @@ define( 'SECONDS_TO_STORE_PW', 864000); // 864000 = 10 Days
 				$postPassword = stripslashes( $password );
 			}
 
-			//if (isset( $_POST[ 'smartType' ]) && isset( $_POST[ 'smartPostType' ])) {
-				$type = $_POST[ 'smartType' ];
-				$posttype = $_POST[ 'smartPostType' ];
+			//if (isset( $_POST[ 'wppwType' ]) && isset( $_POST[ 'wppwPostType' ])) {
+				$type = $_POST[ 'wppwType' ];
+				$posttype = $_POST[ 'wppwPostType' ];
 			//}
 
 			if ( function_exists( 'pause_exclude_pages' ) ) pause_exclude_pages();
@@ -178,6 +178,6 @@ define( 'SECONDS_TO_STORE_PW', 864000); // 864000 = 10 Days
 /**
  * Intialize Plugin
  */
-$wppwpagesposts = new wpPWPagesPosts();
-add_action( 'init', array( $wppwpagesposts, 'process_form' ) );
-add_shortcode( 'wppwpagesposts', array( $wppwpagesposts, 'wppwpagesposts_shortcode' ) );
+$wppwredirect = new wpPWRedirect();
+add_action( 'init', array( $wppwredirect, 'process_form' ) );
+add_shortcode( 'wppwredirect', array( $wppwredirect, 'wppwredirect_shortcode' ) );

@@ -2,7 +2,7 @@
 
 The plugin can be used in two different modes.  All options are configured via the following shortcode on the 'form page'
 
-    [wppwpagesposts]
+    [wppwredirect]
 
 ## Redirect to Pages (default)
 
@@ -13,7 +13,7 @@ To output a password form, and redirect to a page, you'll need to ensure that an
 
 ### Shortcode Usage
 
-    [wppwpagesposts]
+    [wppwredirect]
 
 The shortcode above will output:
 
@@ -39,7 +39,7 @@ The default behaviour can be altered (for page queries) by adding any of the fol
 
 ### Further Examples
 
-    [wppwpagesposts label="submit" type="post" posttype=wpdmpro errormsg="The code entered doesn\'t match any downloadable packages."]
+    [wppwredirect label="submit" type="post" posttype=wpdmpro errormsg="The code entered doesn\'t match any downloadable packages."]
 
 This changes 
 - the button to be labelled 'submit'
@@ -47,7 +47,7 @@ This changes
 - posttype of wpdmpro to further filter the query (Wordpress Download Manager packages)
 - error message of "The code entered doesn't match any downloadable packages."  - Note the escaped apostrophe in the shortcode, in order to display properly on the page.
 
-    [wppwpagesposts ID="myForm" type="post" ]
+    [wppwredirect ID="myForm" type="post" ]
 
 This:
 
