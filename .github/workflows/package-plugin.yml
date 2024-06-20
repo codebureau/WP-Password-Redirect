@@ -13,7 +13,7 @@ jobs:
         steps:
             - uses: actions/checkout@v4
             - name: Get Package Filename
-              id: package-id
+              id: packageId
               run: | 
                     if [[ ${{ github.ref }} == refs/tags/* ]] 
                     then
@@ -28,17 +28,17 @@ jobs:
               name: zip
               with:
                 files: src/wp-password-redirect/ 
-                dest: ${{ steps.package-id.outputs.zipFilename }}
+                dest: ${{ steps.packageId.outputs.zipFilename }}
 
             - uses: actions/upload-artifact@v4
               with:
                 name: plugin-package
-                path: ${{ steps.package-id.outputs.zipFilename }}
+                path: ${{ steps.packageId.outputs.zipFilename }}
 
             - name: Release
               uses: softprops/action-gh-release@v2
               if: startsWith(github.ref, 'refs/tags/')
               with:
                 generate_release_notes: true
-                files: ${{ steps.package-id.outputs.artifactFilename }}
+                files: ${{ steps.packageId.outputs.artifactFilename }}
 
