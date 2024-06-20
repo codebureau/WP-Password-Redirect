@@ -33,6 +33,8 @@ jobs:
             - name: debug
               run: |
                     tree ${{ github.workspace }}
+                    echo ${{ steps.packageId.outputs.zipFilename }}
+                    echo ${{ steps.packageId.outputs.artifactFilename }}
 
             - uses: actions/upload-artifact@v4
               with:
