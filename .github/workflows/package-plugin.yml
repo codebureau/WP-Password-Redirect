@@ -18,7 +18,7 @@ jobs:
                 files: src/ 
                 dest: wp-password-redirect.zip
 
-            - uses: actions/upload-artifact@v1.1
+            - uses: actions/upload-artifact@v4
               with:
                 name: plugin-package
                 path: ${{ github.workspace }}/result.zip
