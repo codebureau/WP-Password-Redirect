@@ -9,9 +9,9 @@ The plugin inserts a password input form via a shortcode, in order to search rel
 
 The shortcode allows an option to search posts rather than child pages.  The posttype can also be specified, to target posts created by other popular plugins. 
 
-This plugin doesn't add the ability to add passwords to pages.  WordPress has that built in.  On the right hand side of the page editing screen in WordPress, you can change the visibility to Password protected and enter in a password. If you are unfamiliar with using passwords in WordPress, you might want to read this page first:  http://codex.wordpress.org/Using_Password_Protection
+This plugin doesn't add the ability to add passwords to pages.  WordPress has that built in.  On the right hand side of the page editing screen in WordPress, you can change the visibility to Password protected and enter in a password. If you are unfamiliar with using passwords in WordPress, you might want to read [this page](http://codex.wordpress.org/Using_Password_Protection) first:  
 
-This plugin does make the password handling smarter and enhances it so that you can enter one password on a parent page and gain access to all the children pages using that password.  If you don't know what children pages or sub-pages are, you might want to read about it here:  http://codex.wordpress.org/Pages#Creating_Pages
+This plugin does make the password handling smarter and enhances it so that you can enter one password on a parent page and gain access to all the children pages using that password.  If you don't know what children pages or sub-pages are, you might want to read about it [here](http://codex.wordpress.org/Pages#Creating_Pages).  
 
 
 ## Contents

@@ -8,8 +8,8 @@ The plugin can be used in two different modes.  All options are configured via t
 
 To output a password form, and redirect to a page, you'll need to ensure that any candidate target pages:
 
-- are a 'child' of the page with the shortcode
-- are password protected
+- are a ['child' of the page](http://codex.wordpress.org/Pages#Creating_Pages) with the shortcode
+- are [password protected](http://codex.wordpress.org/Using_Password_Protection)
 
 ### Shortcode Usage
 
