@@ -14,25 +14,30 @@ jobs:
             - uses: actions/checkout@v4
             - name: Get Package Filename
               id: package-id
-              run: |
-                    echo "zipFilename=wp-password-redirect.zip" 
-                    echo "artifactFilename=${{ github.workspace }}/$filename"
-                    echo "releaseFilename=wp-password-redirect-${{ github.ref }}.zip"
+              run: | 
+                    if [[ ${{ github.ref }} == refs/tags/* ]] 
+                    then
+                        echo "zipFilename=wp-password-redirect-${{ github.ref }}.zip"
+                    else
+                        echo "zipFilename=wp-password-redirect.zip" 
+                    fi
+                    echo "artifactFilename=${{ github.workspace }}/${zipFilename}"
+                    
             - uses: vimtor/action-zip@v1.2
               name: zip
               with:
                 files: src/wp-password-redirect/ 
-                dest: ${{ steps.package-id.outputs.zipFilename}}
+                dest: ${{ steps.package-id.outputs.zipFilename }}
 
             - uses: actions/upload-artifact@v4
               with:
                 name: plugin-package
-                path: ${{ steps.package-id.outputs.artifactFilename}}
+                path: ${{ steps.package-id.outputs.artifactFilename }}
 
             - name: Release
               uses: softprops/action-gh-release@v2
               if: startsWith(github.ref, 'refs/tags/')
               with:
                 generate_release_notes: true
-                files: ${{ steps.package-id.outputs.releaseFilename }}
+                files: ${{ steps.package-id.outputs.zipFilename }}
 
