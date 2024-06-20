@@ -17,10 +17,11 @@ jobs:
               run: | 
                     if [[ ${{ github.ref }} == refs/tags/* ]] 
                     then
-                        echo "zipFilename=wp-password-redirect-${{ github.ref }}.zip"
+                        zipFilename=wp-password-redirect-${{ github.ref }}.zip"
                     else
-                        echo "zipFilename=wp-password-redirect.zip" 
+                        zipFilename=wp-password-redirect.zip
                     fi
+                    echo "zipFilename=${zipFilename}"
                     echo "artifactFilename=${{ github.workspace }}/${zipFilename}"
                     
             - uses: vimtor/action-zip@v1.2
