@@ -28,11 +28,11 @@ jobs:
               name: zip
               with:
                 files: src/wp-password-redirect/ 
-                dest: ${{ steps.packageId.outputs.zipFilename }}
+                dest: ${{ steps.packageId.outputs.artifactFilename }}
 
             - name: debug
               run: |
-                    tree
+                    tree ${{ github.workspace }}
                     ls ${{ steps.packageId.outputs.artifactFilename }}
 
             - uses: actions/upload-artifact@v4
@@ -45,5 +45,5 @@ jobs:
               if: startsWith(github.ref, 'refs/tags/')
               with:
                 generate_release_notes: true
-                files: ${{ steps.packageId.outputs.zipFilename }}
+                files: ${{ steps.packageId.outputs.artifactFilename }}
 
