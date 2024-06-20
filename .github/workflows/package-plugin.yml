@@ -27,7 +27,7 @@ jobs:
             - uses: vimtor/action-zip@v1.2
               name: zip
               with:
-                files: src/ 
+                files: ${{ github.workspace }}/src/ 
                 dest: ${{ steps.packageId.outputs.artifactFilename }}
 
             - name: debug
