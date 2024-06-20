@@ -30,15 +30,20 @@ jobs:
                 files: src/wp-password-redirect/ 
                 dest: ${{ steps.packageId.outputs.zipFilename }}
 
+            - name: debug
+              run: |
+                    tree
+                    ls ${{ steps.packageId.outputs.artifactFilename }}
+
             - uses: actions/upload-artifact@v4
               with:
                 name: plugin-package
-                path: ${{ steps.packageId.outputs.zipFilename }}
+                path: ${{ steps.packageId.outputs.artifactFilename }}
 
             - name: Release
               uses: softprops/action-gh-release@v2
               if: startsWith(github.ref, 'refs/tags/')
               with:
                 generate_release_notes: true
-                files: ${{ steps.packageId.outputs.artifactFilename }}
+                files: ${{ steps.packageId.outputs.zipFilename }}
 
