@@ -14,15 +14,16 @@ jobs:
             - uses: actions/checkout@v4
             - name: Get Package Filename
               id: packageId
-              run: | 
+              run: |
+                    zipFilename = "" 
                     if [[ ${{ github.ref }} == refs/tags/* ]] 
                     then
                         zipFilename="wp-password-redirect-${{ github.ref }}.zip"
                     else
                         zipFilename="wp-password-redirect.zip"
                     fi
-                    echo "{zipFilename}=${zipFilename}" >> GITHUB_OUTPUT
-                    echo "{artifactFilename}=${{ github.workspace }}/${zipFilename}" >> GITHUB_OUTPUT
+                    echo "zipFilename=${zipFilename}" >> $GITHUB_OUTPUT
+                    echo "artifactFilename=${{ github.workspace }}/${zipFilename}" >> $GITHUB_OUTPUT
                     
             - uses: vimtor/action-zip@v1.2
               name: zip
