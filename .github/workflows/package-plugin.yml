@@ -21,8 +21,8 @@ jobs:
                     else
                         zipFilename="wp-password-redirect.zip"
                     fi
-                    echo "zipFilename=${zipFilename}"
-                    echo "artifactFilename=${{ github.workspace }}/${zipFilename}"
+                    echo "zipFilename=${zipFilename}" >> GITHUB_OUTPUT
+                    echo "artifactFilename=${{ github.workspace }}/${zipFilename}" >> GITHUB_OUTPUT
                     
             - uses: vimtor/action-zip@v1.2
               name: zip
