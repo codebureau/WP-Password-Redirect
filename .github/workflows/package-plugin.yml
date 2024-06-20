@@ -12,13 +12,29 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
-
+            - name: Get Package Filename
+              id: package-id
+              run: |
+                    echo "filename=wp-password-redirect-${{ github.ref }}.zip"
+                    echo "fullFilename=${{ github.workspace }}/${filename}"
             - uses: vimtor/action-zip@v1.2
+              name: zip
               with:
                 files: src/ 
-                dest: wp-password-redirect.zip
+                dest: ${{ steps.package-id.outputs.filename}}
 
             - uses: actions/upload-artifact@v4
               with:
                 name: plugin-package
-                path: ${{ github.workspace }}/wp-password-redirect.zip
+                path: ${{ github.workspace }}/${{ steps.package-id.outputs.filename}}
+
+            - name: Release
+            uses: softprops/action-gh-release@v2
+            if: startsWith(github.ref, 'refs/tags/')
+            with:
+                generate_release_notes: true
+                files: ${{ steps.package-id.outputs.fullFilename}}
+
+    release:
+        name: Release Package
+        runs-on: ubuntu-latest
