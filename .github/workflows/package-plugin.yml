@@ -15,7 +15,7 @@ jobs:
             - name: Get Package Filename
               id: packageId
               run: |
-                    zipFilename = "" 
+                    zipFilename="" 
                     if [[ ${{ github.ref }} == refs/tags/* ]] 
                     then
                         zipFilename="wp-password-redirect-${{ github.ref }}.zip"
