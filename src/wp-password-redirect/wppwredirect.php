@@ -118,10 +118,9 @@ define( 'SECONDS_TO_STORE_PW', 864000); // 864000 = 10 Days
 				$postPassword = stripslashes( $password );
 			}
 
-			//if (isset( $_POST[ 'wppwType' ]) && isset( $_POST[ 'wppwPostType' ])) {
-				$type = $_POST[ 'wppwType' ];
-				$posttype = $_POST[ 'wppwPostType' ];
-			//}
+			//Set defaults
+			$type = $_POST[ 'wppwType' ];
+			$posttype = $_POST[ 'wppwPostType' ];
 
 			if ( function_exists( 'pause_exclude_pages' ) ) pause_exclude_pages();
 
