@@ -10,6 +10,6 @@ I needed this to be more flexible, and actually search through custom post types
 
 A central 'download page' will receive a user password, and then redirect to the first 'download package' if finds with the custom post type 'wpdmpro' that has the entered password.  The easiest way to implement this, is to continue the existing style where shortcode attributes are used as data input.
 
-Look in the attached documentation for current details of the plugin.
+Look in the [attached documentation](https://codebureau.github.io/WP-Passworded-Pages-and-Posts/) for current details of the plugin.
 
 If you're interested in contributing, then look [here](CONTRIBUTING).   

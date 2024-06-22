@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: WP Password Redirect
-Plugin URI: https://github.com/codebureau/WP-Passworded-Pages-and-Posts
-Description: Allows a central login page for password protected child pages and WP Download . Enter a password and you are taken to the newest child page with a matching password.
+Plugin URI: https://github.com/codebureau/WP-Password-Redirect
+Description: Allows a central login page for password protected child pages, or posts (with optional custom type). Enter a password and (based on shortcode configuration), you are taken to the newest, child page/post with a matching password.
 Version: 1.0.0
 Author: Matt Simner
 Author URI: https://codebureau.com
@@ -67,7 +67,7 @@ define( 'SECONDS_TO_STORE_PW', 864000); // 864000 = 10 Days
 
 	/**
 	 * Password Redirect
-	 * Decodes the password, stores it in a cookie and redirects the visitor to that page.
+	 * Decodes the password, stores it in a cookie and redirects the visitor to that page/post.
 	 */
 	 function pw_redirect( $perma, $password ) {
 		global $wp_version, $wp_hasher;
@@ -104,7 +104,7 @@ define( 'SECONDS_TO_STORE_PW', 864000); // 864000 = 10 Days
 	
 	/**
 	 * Process Form
-	 * Decodes the password submitted on a form, find a page that uses it and redirects the visitor to that page.
+	 * Decodes the password submitted on a form, find a page that uses it and redirects the visitor to that page/post.
 	 */
 	function process_form() {
 		global $wp_version, $wp_hasher;

@@ -4,6 +4,8 @@ The plugin can be used in two different modes.  All options are configured via t
 
     [wppwredirect]
 
+![screenshot](assets/screenshot1.png)
+
 ## Redirect to Pages (default)
 
 To output a password form, and redirect to a page, you'll need to ensure that any candidate target pages:
@@ -46,6 +48,8 @@ This changes
 - posts to be searched instead of pages
 - posttype of wpdmpro to further filter the query (Wordpress Download Manager packages)
 - error message of "The code entered doesn't match any downloadable packages."  - Note the escaped apostrophe in the shortcode, in order to display properly on the page.
+
+![screenshot](assets/screenshot2.png)
 
     [wppwredirect ID="myForm" type="post" ]
 
