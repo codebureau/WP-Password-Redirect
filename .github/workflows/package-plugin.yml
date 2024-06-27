@@ -21,7 +21,7 @@ jobs:
                     zipFilename="" 
                     if [[ ${{ github.ref }} == refs/tags/* ]] 
                     then
-                        zipFilename="wp-password-redirect-${{ github.ref }}.zip"
+                        zipFilename="wp-password-redirect-${{github.ref_name}}.zip"
                     else
                         zipFilename="wp-password-redirect.zip"
                     fi

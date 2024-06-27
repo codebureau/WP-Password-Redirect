@@ -126,6 +126,7 @@ define( 'SECONDS_TO_STORE_PW', 864000); // 864000 = 10 Days
 
 			if ( $type == 'page') {
 				$args = array(		
+					'number' => 0,			//don't restrict number of pages (0 is currently default)
 					'sort_order' => 'DESC',
 					'sort_column' => 'post_date',
 					'hierarchical' => 1,
@@ -139,6 +140,7 @@ define( 'SECONDS_TO_STORE_PW', 864000); // 864000 = 10 Days
 			}
 			elseif ( $type == 'post') {
 				$args = array(		
+					'numberposts' => -1,	//don't restrict number of posts
 					'sort_order' => 'DESC',
 					'sort_column' => 'post_date',
 					'post_type' => $posttype,
